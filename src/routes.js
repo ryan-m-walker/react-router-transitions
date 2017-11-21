@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import styled from 'styled-components'
 
 import Home from './components/Home'
 import About from './components/About'
@@ -13,19 +12,19 @@ import { TransitionGroup, TransitionContext } from './RouterTransition'
 
 
 const styles = {
-  outBeginStyles: `
+  outBegin: `
     opacity: 1;
     transform: translateY(0);
   `,
-  outEndStyles: `
+  outEnd: `
     opacity: 0;
     transform: translateY(50%);
   `,
-  inBeginStyles: `
+  inBegin: `
     opacity: 0;
     transform: translateY(50%);
   `,
-  inEndStyles: `
+  inEnd: `
     opacity: 1;
     transform: translateY(0);
   `
@@ -33,7 +32,14 @@ const styles = {
 
 
 const Routes = () => (
-  <TransitionContext time={250}>
+  <TransitionContext 
+    time={5000}
+    outBegin={() => console.log('outBegin')}
+    outEnd={() => console.log('outEnd')}
+    inBegin={() => console.log('inBegin')}
+    inEnd={() => console.log('inEnd')}
+    afterEnd={() => console.log('afterEnd')}
+  >
     <Header />
     <TransitionGroup transitionStyles={styles}>
       <Switch>

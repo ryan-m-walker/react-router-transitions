@@ -1,28 +1,15 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { TransitionLink } from '../RouterTransition'
+
 
 const Header = ({goTo}) =>  (
   <div>
     <h1>My Website</h1>
-    <TransitionLink
-      label='Home'
-      to='/'/>
-    <TransitionLink
-      label='About'
-      to='/about'/>
-    <TransitionLink
-      label='Contact'
-      to='/contact'/>
+    <TransitionLink to='/'>Home</TransitionLink>
+    <TransitionLink to='/about'>About</TransitionLink>
+    <TransitionLink to='/contact'>Contact</TransitionLink>
   </div>
 )
-  
-
-
-// const TransitionLink = ({label, to, goTo}) => (
-//   <button onClick={() => goTo(to)}>
-//     { label }
-//   </button>
-// )
 
 
 export default Header

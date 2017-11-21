@@ -10,13 +10,15 @@ class TransitionGroup extends Component {
   }
 
   render() {
-    console.log(this.context)
+    const { time, transitionState } = this.context.transition
+    const { children, transitionStyles } = this.props
+
     return (
       <Transition 
-        time={this.context.transition.time} 
+        time={time} 
         transitionStyles={this.props.transitionStyles}
-        transition={this.context.transition.transition}>
-        { this.props.children }
+        transitionState={transitionState}>
+        { children }
       </Transition>
     )
   }
@@ -24,24 +26,24 @@ class TransitionGroup extends Component {
 
 
 const Transition = styled.div`
-${props => {
-  switch(props.transition) {
-    case 'out-begin':
-      return props.transitionStyles.outBeginStyles
-    case 'out-end':
-      return props.transitionStyles.outEndStyles
-    case 'in-begin':
-      return props.transitionStyles.inBeginStyles
-    case 'in-end':
-      return props.transitionStyles.inEndStyles
-    default: 
-      return props.transitionStyles.outBeginStyles
-  }
-}}
-transition: ${props => props.transition 
-  ? 'all ' + props.time + 'ms'
-  : 'none'
-};
+  ${props => {
+    switch(props.transitionState) {
+      case 'out-begin':
+        return props.transitionStyles.outBegin
+      case 'out-end':
+        return props.transitionStyles.outEnd
+      case 'in-begin':
+        return props.transitionStyles.inBegin
+      case 'in-end':
+        return props.transitionStyles.inEnd
+      default: 
+        return props.transitionStyles.outBegin
+    }
+  }}
+  transition: ${props => props.transitionState
+    ? 'all ' + props.time + 'ms'
+    : 'none'
+  };
 `
 
 

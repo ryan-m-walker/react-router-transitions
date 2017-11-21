@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { createBrowserHistory as createHistory } from 'history'
+
 
 class TransitionContext extends Component {
 
   state = {
-    transition: ''
+    transitionState: ''
   }
 
   static contextTypes = {
@@ -13,61 +13,73 @@ class TransitionContext extends Component {
   }
 
   static childContextTypes = {
-    goTo: PropTypes.func,
-    transition: PropTypes.string,
-    time: PropTypes.number
+    transition: PropTypes.object
   }
 
   getChildContext() {
     return {
       transition: {
         goTo: this.goTo,
-        transition: this.state.transition,
+        transitionState: this.state.transitionState,
         time: this.props.time
       }
     }
   }
 
   goTo = path => {
-    console.log('test')
-    
     const { time } = this.props
 
     const outBegin = () => {
-      this.setState(() => ({ transition: 'out-begin' }))
+      // Run life-cycle function if exists
+      if (this.props.outBegin) {
+        this.props.outBegin()
+      }
+      this.setState(() => ({ transitionState: 'out-begin' }))
       setTimeout(() => {
         outEnd()
       }, 1)
     }
 
     const outEnd = () => {
-      this.setState(() => ({ transition: 'out-end' }))
+      this.setState(() => ({ transitionState: 'out-end' }))
       setTimeout(() => {
+        // Run life-cycle function if exists
+        if (this.props.outEnd) {
+          this.props.outEnd()
+        }
         this.context.router.history.push(path)
         inBegin()
       }, time)
     }
 
     const inBegin = () => {
-      this.setState(() => ({ transition: 'in-begin' }))
+      // Run life-cycle function if exists
+      if (this.props.inBegin) {  
+        this.props.inBegin() 
+      }
+      this.setState(() => ({ transitionState: 'in-begin' }))
       setTimeout(() => {
         inEnd()
       }, 1)
     }
 
+
     const inEnd = () => {
-      this.setState(() => ({ transition: 'in-end' }))
+      this.setState(() => ({ transitionState: 'in-end' }))
       setTimeout(() => {
+        // Run life-cycle function if exists
+        if (this.props.inEnd) {
+          this.props.inEnd()
+        }
         clearTransition()
       }, time)
     }
 
     const clearTransition = () => {
-      this.setState(() => ({ transition: '' }))
+      this.setState(() => ({ transitionState: '' }))
     }
 
-    !this.state.transition && outBegin()
-    
+    !this.state.transitionState && outBegin()
   }
 
   render() {

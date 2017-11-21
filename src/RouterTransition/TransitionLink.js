@@ -19,12 +19,9 @@ class TransitionLink extends Component {
   }
 
   render() {
+    const {...props} = this.props
     return (
-      <a 
-        to={this.props.to} 
-        onClick={this.handleClick}>
-        { this.props.label }
-      </a>
+      <a {...props} onClick={this.handleClick} />
     )
   }
 }
