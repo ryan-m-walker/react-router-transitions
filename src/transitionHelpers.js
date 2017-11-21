@@ -1,28 +1,11 @@
 
 
 export const transitionStyles = {
-  outBegin: `
-    opacity: 1;
-    transform: translateY(0); 
-  `,
-  outEnd: `
-    opacity: 0;
-    transform: translateY(110%);
-  `,
-  inBegin: `
-    opacity: 0;
-    transform: translateY(110%);
-  `,
-  inEnd: `
-    opacity: 1;
-    transform: translateY(0);
-  `
+  default: 'background: teal'
 }
 
 
-export const wrapperStyles = props => ({
-  default: 'background: ' + props.theme.color
-})
+export const wrapperStyles = 'background: none'
 
 
 export const config = {

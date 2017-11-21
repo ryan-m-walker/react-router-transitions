@@ -19,6 +19,7 @@ export default styled.div`
       return wrapperStyles.default
     }
   }}
+
   ${props => {
     const { wrapperStyles, transitionState } = props
     if (_.isObject(wrapperStyles)) {
@@ -34,6 +35,7 @@ export default styled.div`
       }
     }
   }}
+
   ${props => {
     const { wrapperStyles, transitionState } = props
     if (_.isFunction(wrapperStyles)) {
@@ -49,6 +51,7 @@ export default styled.div`
       }
     }
   }}
+  
   ${props => {
     if (props.wrapperStyles) {
       const time = props.time ? props.time : 500
