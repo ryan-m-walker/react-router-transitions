@@ -4,46 +4,23 @@ import styled from 'styled-components'
 
 
 class TransitionGroup extends Component {
+
+  static contextTypes = {
+    transition: PropTypes.object
+  }
+
   render() {
     console.log(this.context)
     return (
       <Transition 
-        time={this.context.time} 
+        time={this.context.transition.time} 
         transitionStyles={this.props.transitionStyles}
-        transition={this.context.transition}>
+        transition={this.context.transition.transition}>
         { this.props.children }
       </Transition>
     )
   }
 }
-
-TransitionGroup.contextTypes = {
-  transition: PropTypes.string,
-  time: PropTypes.number
-}
-
-
-
-
-// const outBeginStyles = `
-// opacity: 1;
-// transform: translateY(0);
-// `
-
-// const outEndStyles = `
-// opacity: 0;
-// transform: translateY(50%);
-// `
-
-// const inBeginStyles = `
-// opacity: 0;
-// transform: translateY(50%);
-// `
-
-// const inEndStyles = `
-// opacity: 1;
-// transform: translateY(0);
-// `
 
 
 const Transition = styled.div`
@@ -66,8 +43,6 @@ transition: ${props => props.transition
   : 'none'
 };
 `
-
-
 
 
 export default TransitionGroup

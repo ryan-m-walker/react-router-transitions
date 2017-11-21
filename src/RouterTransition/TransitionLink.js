@@ -3,20 +3,31 @@ import PropTypes from 'prop-types'
 
 
 class TransitionLink extends Component {
+
+  static contextTypes = {
+    transition: PropTypes.object
+  }
+
+  handleClick = event => {
+    if (this.props.onClick) {
+      this.props.onClick(event)
+    }
+
+    event.preventDefault()
+    
+    this.context.transition.goTo(this.props.to)
+  }
+
   render() {
     return (
-      <button to={this.props.to} onClick={() => this.context.goTo(this.props.to)}>
+      <a 
+        to={this.props.to} 
+        onClick={this.handleClick}>
         { this.props.label }
-      </button>
+      </a>
     )
   }
 }
 
 
-TransitionLink.contextTypes = {
-  goTo: PropTypes.func
-}
-
-
 export default TransitionLink
-

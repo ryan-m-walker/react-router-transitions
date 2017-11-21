@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import TransitionLink from '../RouterTransition/TransitionLink'
+import { TransitionLink } from '../RouterTransition'
 
 const Header = ({goTo}) =>  (
   <div>

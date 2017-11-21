@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-
+import { createBrowserHistory as createHistory } from 'history'
 
 class TransitionContext extends Component {
 
@@ -8,11 +8,23 @@ class TransitionContext extends Component {
     transition: ''
   }
 
+  static contextTypes = {
+    router: PropTypes.object,
+  }
+
+  static childContextTypes = {
+    goTo: PropTypes.func,
+    transition: PropTypes.string,
+    time: PropTypes.number
+  }
+
   getChildContext() {
     return {
-      goTo: this.goTo,
-      transition: this.state.transition,
-      time: this.props.time
+      transition: {
+        goTo: this.goTo,
+        transition: this.state.transition,
+        time: this.props.time
+      }
     }
   }
 
@@ -31,7 +43,7 @@ class TransitionContext extends Component {
     const outEnd = () => {
       this.setState(() => ({ transition: 'out-end' }))
       setTimeout(() => {
-        this.context.history.push(path)
+        this.context.router.history.push(path)
         inBegin()
       }, time)
     }
@@ -58,25 +70,9 @@ class TransitionContext extends Component {
     
   }
 
-
   render() {
-    console.log(this.context)
-    return (
-      <div>
-        { this.props.children }
-      </div>
-    )
+    return <div>{ this.props.children }</div>
   }
-}
-
-TransitionContext.contextTypes = {
-  history: PropTypes.object,
-}
-
-TransitionContext.childContextTypes = {
-  goTo: PropTypes.func,
-  transition: PropTypes.string,
-  time: PropTypes.number
 }
 
 

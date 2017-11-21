@@ -4,7 +4,7 @@ import './index.css'
 import Routes from './routes'
 import App from './App'
 import { Router, Route } from 'react-router-dom'
-import HistoryProvider from './RouterTransition/HistoryProvider'
+import { HistoryProvider } from './RouterTransition'
 import registerServiceWorker from './registerServiceWorker'
 import createBrowserHistory from 'history/createBrowserHistory'
 
@@ -13,19 +13,10 @@ const history = createBrowserHistory()
 
 const MyApp = () => (
   <Router history={history}>
-    <HistoryProvider history={history}>
-      <Routes history={history}/>
-    </HistoryProvider>
+    <Routes history={history}/>
   </Router>
 )
 
-const TestApp = () => (
-  <Router history={history}>
-    <HistoryProvider history={history}>
-      <App />
-    </HistoryProvider>
-  </Router>
-)
 
 
 ReactDOM.render(<MyApp />, document.getElementById('root'))

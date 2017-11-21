@@ -8,9 +8,8 @@ import Contact from './components/Contact'
 import PageNotFound from './components/PageNotFound'
 import Header from './components/Header'
 
-import TransitionGroup from './RouterTransition/TransitionGroup'
-import TransitionContext from './RouterTransition/TransitionContext'
-import TransitionLink from './RouterTransition/TransitionLink'
+import { TransitionGroup, TransitionContext } from './RouterTransition'
+
 
 
 const styles = {
