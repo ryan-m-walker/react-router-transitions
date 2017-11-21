@@ -16,25 +16,28 @@ class TransitionContext extends Component {
     transition: PropTypes.object
   }
 
-  getChildContext() {
-    const { time, timeIn, timeOut } = this.props.config || this.props  
+  static defaultProps = {
+    time: 0
+  }
 
+  getChildContext() {
     return {
       transition: {
         goTo: this.goTo,
         transitionState: this.state.transitionState,
-        time: time,
-        timeIn: timeIn,
-        timeOut: timeOut
+        time: this.props.config && this.props.config.time ? this.props.config.time : this.props.time,
+        timeIn: this.props.config && this.props.config.timeIn ? this.props.config.time : this.props.time,
+        timeOut: this.props.config && this.props.config.Out ? this.props.config.Out : this.props.Out
       }
     }
   }
 
   goTo = path => {
-    const { time, timeIn, timeOut } = this.props.config || this.props  
-    const delay = time ? time : 500
-    const delayIn = timeIn ? timeIn : delay
-    const delayOut = timeOut ? timeOut : delay
+    const time = this.props.config.time || this.props.time
+    const timeOut = this.props.config.timeOut || this.props.timeOut
+    const timeIn = this.props.config.timeIn || this.props.timeIn
+    const delayIn = timeIn ? timeIn : (time / 2)
+    const delayOut = timeOut ? timeOut : (time / 2)
 
     const { 
       inBegin: lifeCycleInBegin,
@@ -43,60 +46,105 @@ class TransitionContext extends Component {
       outEnd: lifeCycleOutEnd
     } = this.props.config || this.props
 
-    const outBegin = () => {  
 
+
+
+
+
+    //////////////////// 
+
+    // OUT - BEGIN
+
+    const outBegin = () => {  
+      this.setState(() => ({ transitionState: 'out-begin' }))
       // Run life-cycle function if exists
       if (lifeCycleOutBegin) {
-        lifeCycleOutBegin()
+        lifeCycleOutBegin(this.props, this.state)
       }
-      this.setState(() => ({ transitionState: 'out-begin' }))
       setTimeout(() => {
+        this.setState(() => ({ transitionState: 'out-end' }))
         outEnd()
-      }, 1)
+      }, 10)
     }
 
+
+    ////////////////////
+
+    // OUT - END
+
     const outEnd = () => {
-      this.setState(() => ({ transitionState: 'out-end' }))
       setTimeout(() => {
         // Run life-cycle function if exists
         if (lifeCycleOutEnd) {
-          lifeCycleOutEnd()
+          lifeCycleOutEnd(this.props, this.state)
         }
-        this.context.router.history.push(path)
-        inBegin()
-      }, delayIn)
+        inBetween()
+      }, (delayOut - 10))
     }
+
+
+    ////
+
+    // BETWEEN
+
+    const inBetween = () => {
+      this.setState(() => ({ transitionState: 'in-between' }))
+      this.context.router.history.push(path)
+      setTimeout(() => {
+        inBegin()
+      }, 10)
+    }
+
+
+    ////////////////////
+
+    // IN - BEGIN
 
     const inBegin = () => {
+      this.setState(() => ({ transitionState: 'in-begin' }))
       // Run life-cycle function if exists
       if (lifeCycleInBegin) {  
-        lifeCycleInBegin() 
+        lifeCycleInBegin(this.props, this.state) 
       }
-      this.setState(() => ({ transitionState: 'in-begin' }))
       setTimeout(() => {
+        this.setState(() => ({ transitionState: 'in-end' }))
         inEnd()
-      }, 1)
+      }, 10)
     }
 
+
+    ////////////////////
+
+    // IN - END
+
     const inEnd = () => {
-      this.setState(() => ({ transitionState: 'in-end' }))
       setTimeout(() => {
         // Run life-cycle function if exists
         if (lifeCycleInEnd) {
-          lifeCycleInEnd()
+          lifeCycleInEnd(this.props, this.state)
         }
         clearTransition()
-      }, delayOut)
+      }, (delayIn - 10))
     }
+
+
+
+    ////////////////////
+
+    // CLEAR
 
     const clearTransition = () => {
       this.setState(() => ({ transitionState: '' }))
     }
 
+
+    // INITIATE
+
     !this.state.transitionState && outBegin()
   }
 
   render() {
+    console.log(this.state.transitionState)
     return <div>{ this.props.children }</div>
   }
 }

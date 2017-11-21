@@ -51,22 +51,22 @@ export default styled.div`
       }
     }
   }}
-  
+
   ${props => {
     if (props.wrapperStyles) {
-      const time = props.time ? props.time : 500
-      const timeIn = props.timeIn ? props.timeIn : time
-      const timeOut = props.timeOut ? props.timeOut : time
+      const timeIn = props.timeIn ? props.timeIn : (props.time / 2)
+      const timeOut = props.timeOut ? props.timeOut : (props.time / 2)
+      const { wrapperEase } = props
 
       switch(props.transitionState) {
         case 'out-begin':
-          return 'transition: all ' + timeIn + 'ms;'
+          return 'transition: all ' + timeIn + 'ms ' + (wrapperEase ? wrapperEase : '') + ';'
         case 'out-end':
-          return 'transition: all ' + timeIn + 'ms;'
+          return 'transition: all ' + timeIn + 'ms ' + (wrapperEase ? wrapperEase : '') + ';'
         case 'in-begin':
-          return 'transition: all ' + timeOut + 'ms;'
+          return ''
         case 'in-end':
-          return 'transition: all ' + timeOut + 'ms;'
+          return 'transition: all ' + timeOut + 'ms ' + (wrapperEase ? wrapperEase : '') + ';'
         default: 
           return ''
       }

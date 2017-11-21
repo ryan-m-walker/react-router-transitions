@@ -1,14 +1,14 @@
 
-
-export const transitionStyles = {
-  default: 'background: teal'
+export const config = {
+  // outBegin: (props, state) => logger('outBegin', props, state),
+  // outEnd: (props, state) => logger('outEnd', props, state),
+  // inBegin: (props, state) => logger('inBegin', props, state),
+  // inEnd: (props, state) => logger('inEnd', props, state),
 }
 
-
-export const wrapperStyles = 'background: none'
-
-
-export const config = {
-  timeIn: 250,
-  timeOut: 350,
+const logger = (when, props, state) => {
+  console.groupCollapsed(when)
+  console.log(props)
+  console.log(state)
+  console.groupEnd()
 }

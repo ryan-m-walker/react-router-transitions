@@ -2,7 +2,7 @@ import React from 'react'
 import { TransitionLink } from '../RouterTransition'
 
 
-const Header = ({goTo}) =>  (
+const Header = () =>  (
   <div>
     <h1>My Website</h1>
     <TransitionLink to='/'>Home</TransitionLink>

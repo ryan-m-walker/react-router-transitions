@@ -28,6 +28,8 @@ export default styled.div`
           return transitionStyles.outBegin || '' 
         case 'out-end':
           return transitionStyles.outEnd || '' 
+        case 'in-between':
+          return transitionStyles.inBegin || ''
         case 'in-begin':
           return transitionStyles.inBegin || ''
         case 'in-end':
@@ -43,7 +45,9 @@ export default styled.div`
         case 'out-begin':
           return transitionStyles.outBegin(props) || '' 
         case 'out-end':
-          return transitionStyles.outEnd(props) || '' 
+          return transitionStyles.outEnd(props) || ''
+        case 'in-between':
+          return
         case 'in-begin':
           return transitionStyles.inBegin(props) || ''
         case 'in-end':
@@ -54,19 +58,21 @@ export default styled.div`
 
   ${props => {
     if (props.transitionStyles) {
-      const time = props.time ? props.time : 500
-      const timeIn = props.timeIn ? props.timeIn : time
-      const timeOut = props.timeOut ? props.timeOut : time
+      const timeIn = props.timeIn ? props.timeIn : (props.time / 2)
+      const timeOut = props.timeOut ? props.timeOut : (props.time / 2)
+      const { transitionEase } = props
 
       switch(props.transitionState) {
         case 'out-begin':
-          return 'transition: all ' + timeIn + 'ms;'
+          return 'transition: all ' + timeIn + 'ms ' + (transitionEase ? transitionEase : '') + ';'
         case 'out-end':
-          return 'transition: all ' + timeIn + 'ms;'
+          return 'transition: all ' + timeIn + 'ms ' + (transitionEase ? transitionEase : '') + ';'
+        case 'in-between':
+          return
         case 'in-begin':
-          return 'transition: all ' + timeOut + 'ms;'
+          return 'transition: all ' + timeOut + 'ms ' + (transitionEase ? transitionEase : '') + ';'
         case 'in-end':
-          return 'transition: all ' + timeOut + 'ms;'
+          return 'transition: all ' + timeOut + 'ms ' + (transitionEase ? transitionEase : '') + ';'
         default: 
           return ''
       }

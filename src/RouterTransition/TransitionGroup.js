@@ -13,19 +13,25 @@ class TransitionGroup extends Component {
   }
 
   render() {
-    const { transitionState, timeIn, timeOut } = this.context.transition
-    const { children, transitionStyles,  wrapperStyles, wrapperClassName, ...props  } = this.props
+    const { time, transitionState, timeIn, timeOut } = this.context.transition
+    const { children, transitionStyles,  wrapperStyles, transitionEase, wrapperEase, wrapperClassName, ...props  } = this.props
 
     return (
       <Wrapper
+        time={time}
+        timeIn={timeIn}
+        timeOut={timeOut} 
         className={wrapperClassName}
         transitionState={transitionState}
-        wrapperStyles={wrapperStyles}>
+        wrapperStyles={wrapperStyles}
+        wrapperEase={wrapperEase}>
         <Transition 
+          time={time}
           timeIn={timeIn}
           timeOut={timeOut} 
           transitionStyles={transitionStyles}
           transitionState={transitionState}
+          transitionEase={transitionEase}
           {...props}>
           { children }
         </Transition>
