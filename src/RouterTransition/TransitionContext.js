@@ -25,17 +25,15 @@ class TransitionContext extends Component {
       transition: {
         goTo: this.goTo,
         transitionState: this.state.transitionState,
-        time: this.props.config && this.props.config.time ? this.props.config.time : this.props.time,
-        timeIn: this.props.config && this.props.config.timeIn ? this.props.config.time : this.props.time,
-        timeOut: this.props.config && this.props.config.Out ? this.props.config.Out : this.props.Out
+        time: this.props.time,
+        timeIn: this.props.timeIn,
+        timeOut: this.props.timeOut
       }
     }
   }
 
   goTo = path => {
-    const time = this.props.config.time || this.props.time
-    const timeOut = this.props.config.timeOut || this.props.timeOut
-    const timeIn = this.props.config.timeIn || this.props.timeIn
+    const { time, timeIn, timeOut } = this.props
     const delayIn = timeIn ? timeIn : (time / 2)
     const delayOut = timeOut ? timeOut : (time / 2)
 
@@ -44,16 +42,8 @@ class TransitionContext extends Component {
       inEnd: lifeCycleInEnd,
       outBegin: lifeCycleOutBegin,
       outEnd: lifeCycleOutEnd
-    } = this.props.config || this.props
+    } = this.props
 
-
-
-
-
-
-    //////////////////// 
-
-    // OUT - BEGIN
 
     const outBegin = () => {  
       this.setState(() => ({ transitionState: 'out-begin' }))
@@ -67,11 +57,6 @@ class TransitionContext extends Component {
       }, 10)
     }
 
-
-    ////////////////////
-
-    // OUT - END
-
     const outEnd = () => {
       setTimeout(() => {
         // Run life-cycle function if exists
@@ -79,13 +64,8 @@ class TransitionContext extends Component {
           lifeCycleOutEnd(this.props, this.state)
         }
         inBetween()
-      }, (delayOut - 10))
+      }, (delayOut - 20))
     }
-
-
-    ////
-
-    // BETWEEN
 
     const inBetween = () => {
       this.setState(() => ({ transitionState: 'in-between' }))
@@ -94,11 +74,6 @@ class TransitionContext extends Component {
         inBegin()
       }, 10)
     }
-
-
-    ////////////////////
-
-    // IN - BEGIN
 
     const inBegin = () => {
       this.setState(() => ({ transitionState: 'in-begin' }))
@@ -112,11 +87,6 @@ class TransitionContext extends Component {
       }, 10)
     }
 
-
-    ////////////////////
-
-    // IN - END
-
     const inEnd = () => {
       setTimeout(() => {
         // Run life-cycle function if exists
@@ -127,24 +97,14 @@ class TransitionContext extends Component {
       }, (delayIn - 10))
     }
 
-
-
-    ////////////////////
-
-    // CLEAR
-
     const clearTransition = () => {
       this.setState(() => ({ transitionState: '' }))
     }
-
-
-    // INITIATE
 
     !this.state.transitionState && outBegin()
   }
 
   render() {
-    console.log(this.state.transitionState)
     return <div>{ this.props.children }</div>
   }
 }

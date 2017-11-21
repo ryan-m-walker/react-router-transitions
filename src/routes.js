@@ -8,12 +8,11 @@ import Contact from './components/Contact'
 import PageNotFound from './components/PageNotFound'
 
 import { TransitionGroup, TransitionContext, TransitionLink } from './RouterTransition'
-import { config } from './transitionHelpers'
 
 
 const Routes = () => (
   <Wrapper>
-    <TransitionContext time={1000}>
+    <TransitionContext timeOut={375} timeIn={225}>
       <Header>
         <h1>My Website</h1>
         <StyledLink to='/'>Home</StyledLink>
@@ -21,7 +20,7 @@ const Routes = () => (
         <StyledLink to='/contact'>Contact</StyledLink>
       </Header>
       <TransitionGroup
-        transitionEase='ease-out'
+        transitionEase='ease'
         transitionStyles={transitionStyles}
         wrapperStyles={wrapperStyles}>
         <Switch>
@@ -58,24 +57,24 @@ const wrapperStyles = `
   overflow: hidden;
 `
 
-const transitionStyles = {
+const transitionStyles = props => ({
   outBegin: `
+    transform: translateY(0);
     opacity: 1;
-    transform: translateX(0);
   `,
   outEnd: `
+    transform: translateY(2rem);
     opacity: 0;
-    transform: translateY(10rem);
   `,
   inBegin: `
+    transform: translateY(2rem);
     opacity: 0;
-    transform: translateY(10rem);
   `,
   inEnd: `
+    transform: translateY(0);
     opacity: 1;
-    transform: translateX(0);
   `
-}
+})
 
 
 

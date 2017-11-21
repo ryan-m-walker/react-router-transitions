@@ -10,6 +10,8 @@
 
 - Life Cycle Functions
 
+The *TransitionContext* compenent is the main wrapping component for react-router-transitions. In order for your TransitionLinks and TransitionGroups to be linked they must both be placed inside a *TransitionContext* component. A *TransitionContext* component must also be a descendant of a react-router *BrowserRouter* or *Router* component. This is necessariy because it uses the history object provided by that component to manipulate the url and make sure the UI updates accordingly. The transition context is also where you set 
+
 
 
 ## TransitionLink

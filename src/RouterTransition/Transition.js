@@ -43,15 +43,15 @@ export default styled.div`
     if (_.isFunction(transitionStyles)) {
       switch(transitionState) {
         case 'out-begin':
-          return transitionStyles.outBegin(props) || '' 
+          return transitionStyles(props).outBegin || '' 
         case 'out-end':
-          return transitionStyles.outEnd(props) || ''
+          return transitionStyles(props).outEnd || ''
         case 'in-between':
-          return
+          return transitionStyles(props).inBegin || ''
         case 'in-begin':
-          return transitionStyles.inBegin(props) || ''
+          return transitionStyles(props).inBegin || ''
         case 'in-end':
-          return transitionStyles.inEnd(props) || ''  
+          return transitionStyles(props).inEnd || ''  
       }
     }
   }}
@@ -70,9 +70,9 @@ export default styled.div`
         case 'in-between':
           return
         case 'in-begin':
-          return 'transition: all ' + timeOut + 'ms ' + (transitionEase ? transitionEase : '') + ';'
+          return 'transition: all ' + (timeOut - 200) + 'ms ' + (transitionEase ? transitionEase : '') + ';'
         case 'in-end':
-          return 'transition: all ' + timeOut + 'ms ' + (transitionEase ? transitionEase : '') + ';'
+          return 'transition: all ' + (timeOut - 200) + 'ms ' + (transitionEase ? transitionEase : '') + ';'
         default: 
           return ''
       }
