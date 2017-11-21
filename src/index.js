@@ -4,12 +4,19 @@ import './index.css'
 import Routes from './routes'
 import { BrowserRouter } from 'react-router-dom'
 import registerServiceWorker from './registerServiceWorker'
-import createBrowserHistory from 'history/createBrowserHistory'
+import { ThemeProvider } from 'styled-components'
+
+
+const theme = {
+  color: 'blue'
+}
 
 
 const MyApp = () => (
   <BrowserRouter>
-    <Routes />
+    <ThemeProvider theme={theme}>
+      <Routes />
+    </ThemeProvider>
   </BrowserRouter>
 )
 

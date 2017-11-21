@@ -17,22 +17,37 @@ class TransitionContext extends Component {
   }
 
   getChildContext() {
+    const { time, timeIn, timeOut } = this.props.config || this.props  
+
     return {
       transition: {
         goTo: this.goTo,
         transitionState: this.state.transitionState,
-        time: this.props.time
+        time: time,
+        timeIn: timeIn,
+        timeOut: timeOut
       }
     }
   }
 
   goTo = path => {
-    const { time } = this.props
+    const { time, timeIn, timeOut } = this.props.config || this.props  
+    const delay = time ? time : 500
+    const delayIn = timeIn ? timeIn : delay
+    const delayOut = timeOut ? timeOut : delay
 
-    const outBegin = () => {
+    const { 
+      inBegin: lifeCycleInBegin,
+      inEnd: lifeCycleInEnd,
+      outBegin: lifeCycleOutBegin,
+      outEnd: lifeCycleOutEnd
+    } = this.props.config || this.props
+
+    const outBegin = () => {  
+
       // Run life-cycle function if exists
-      if (this.props.outBegin) {
-        this.props.outBegin()
+      if (lifeCycleOutBegin) {
+        lifeCycleOutBegin()
       }
       this.setState(() => ({ transitionState: 'out-begin' }))
       setTimeout(() => {
@@ -44,18 +59,18 @@ class TransitionContext extends Component {
       this.setState(() => ({ transitionState: 'out-end' }))
       setTimeout(() => {
         // Run life-cycle function if exists
-        if (this.props.outEnd) {
-          this.props.outEnd()
+        if (lifeCycleOutEnd) {
+          lifeCycleOutEnd()
         }
         this.context.router.history.push(path)
         inBegin()
-      }, time)
+      }, delayIn)
     }
 
     const inBegin = () => {
       // Run life-cycle function if exists
-      if (this.props.inBegin) {  
-        this.props.inBegin() 
+      if (lifeCycleInBegin) {  
+        lifeCycleInBegin() 
       }
       this.setState(() => ({ transitionState: 'in-begin' }))
       setTimeout(() => {
@@ -63,16 +78,15 @@ class TransitionContext extends Component {
       }, 1)
     }
 
-
     const inEnd = () => {
       this.setState(() => ({ transitionState: 'in-end' }))
       setTimeout(() => {
         // Run life-cycle function if exists
-        if (this.props.inEnd) {
-          this.props.inEnd()
+        if (lifeCycleInEnd) {
+          lifeCycleInEnd()
         }
         clearTransition()
-      }, time)
+      }, delayOut)
     }
 
     const clearTransition = () => {

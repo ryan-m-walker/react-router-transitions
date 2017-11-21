@@ -19,5 +19,5 @@
 
 ## TransitionGroup
 
-
+- Transition styles: needs to be either an object or can be a function that returns an object. If it is a function it will be passed the props of the component as the only arguement
 
