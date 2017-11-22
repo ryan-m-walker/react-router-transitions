@@ -2,6 +2,31 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 
+// TODO : allow for adding 'time' prop and only one of either 'timeIn' or 'timeOut' - calculate difference automatically
+//   if - only time
+//   if - time and timeIn only
+//   if - time and timeOut only
+//   if - timeOut only
+//   if - timeIn only
+
+
+/*
+
+PROPS:
+
+time:      number (milliseconds) - the amount of total time a transition will take. This number will be divided in half between the transition out and transition in
+timeOut:   number (milliseconds) - used to specifiy transition out time
+timeIn:    number (milliseconds) - used to specify transition time in
+outBegin:  func - an optional lifecycle function that can be passed that will fire at the begining of transition out
+outEnd:    func - an optional lifecycle function that can be passed that will fire at the end of transition out
+inBegin:   func - an optional lifecycle function that can be passed that will fire at the beginning of transition in
+inEnd:     func - an optional lifecycle function that can be passed that will fire at the end of transition in
+
+
+*/
+
+
+
 class TransitionContext extends Component {
 
   state = {
@@ -32,7 +57,7 @@ class TransitionContext extends Component {
     }
   }
 
-  goTo = (path, start, between, end, e) => {
+  goTo = (path, begin, between, end, e) => {
     const { time, timeIn, timeOut } = this.props
     const delayIn = timeIn ? timeIn : (time / 2)
     const delayOut = timeOut ? timeOut : (time / 2)
@@ -47,8 +72,8 @@ class TransitionContext extends Component {
 
     const outBegin = () => {
       this.setState(() => ({ transitionState: 'out-begin' }))
-      if (start) {
-        start(e)
+      if (begin) {
+        begin(e)
       }  
       console.log('delay out:', delayOut)
       // Run life-cycle function if exists

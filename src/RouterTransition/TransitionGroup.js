@@ -5,6 +5,20 @@ import styled from 'styled-components'
 import getStyles from './getStyles'
 
 
+/*
+
+PROPS
+
+transitionStyles:  func that returns object(will be passed props, including props.theme as argument), func that returns string(will be passed props, including props.theme  as argument), object or string
+wrapperStyles:     func that returns object(will be passed props, including props.theme  as argument), func that returns string(will be passed props, including props.theme  as argument), object or string
+transitionEase:    string
+wrapperEase:       string
+wrapperClassName:  className for wrapper
+
+*/
+
+
+
 class TransitionGroup extends Component {
 
   static contextTypes = {
@@ -40,7 +54,17 @@ class TransitionGroup extends Component {
   }
 }
 
-const Transition = styled.div`${props => getStyles(props, props.transitionStyles)}`
-const Wrapper = styled.div`${props => getStyles(props, props.wrapperStyles)}`
+const Transition = styled.div`${props => 
+  props.transitionStyles
+  ? getStyles(props, props.transitionStyles)
+  : ''
+}`
+
+const Wrapper = styled.div`${props => 
+  props.wrapperStyles
+  ? getStyles(props, props.wrapperStyles)
+  : ''
+}`
+
 
 export default TransitionGroup

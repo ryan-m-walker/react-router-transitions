@@ -15,10 +15,7 @@ const Routes = () => (
     <TransitionContext time={300}>
       <Header>
         <h1>My Website</h1>
-        <StyledLink to='/'
-          start={(e) => console.log('begin:',e)}
-          between={(e) => console.log('between:',e)}
-          end={(e) => console.log('end:',e)}>
+        <StyledLink to='/'>
           Home
         </StyledLink>
         <StyledLink to='/about'>About</StyledLink>
@@ -40,8 +37,6 @@ const Routes = () => (
 )
 
 
-
-
 const StyledLink = styled(TransitionLink)`
   color: white;
   margin-right: 1.5rem;
@@ -59,10 +54,17 @@ const Wrapper = styled.section`
   background: white;
 `
 
-const wrapperStyles = `
-  padding: 2rem 5%;
-  overflow: hidden;
-`
+const wrapperStyles = {
+  default: `
+    padding: 2rem 5%;
+    overflow: hidden;
+    background: white;
+  `,
+  outBegin: 'background: white;',
+  outEnd: 'background: pink;',
+  inBegin: 'background: pink;',
+  inEnd: 'background: white;'
+}
 
 const transitionStyles = props => ({
   outBegin: `

@@ -76,15 +76,11 @@ export default (props, styles) => {
     
   }
 
-  if (styles) {
-    return `
-      ${ getDefaultStyles() }
-      ${ _.isObject(styles) ? getObjectStyles() : '' }
-      ${ _.isFunction(styles) ? getFunctionStyles() : '' }
-      ${ getTransitionStyles()}
-    `
-  } else {
-    return ''
-  }
+  return `
+    ${ getDefaultStyles() }
+    ${ _.isObject(styles) ? getObjectStyles() : '' }
+    ${ _.isFunction(styles) ? getFunctionStyles() : '' }
+    ${ getTransitionStyles()}
+  `
 }
 

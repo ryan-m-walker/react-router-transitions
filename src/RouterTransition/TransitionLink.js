@@ -2,6 +2,17 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
+/*
+
+PROPS
+
+to          string - url the link will take you to
+onBegin     func - lifecycle function that will call at the beginning of the transition. Good for handling onClick events at the right time
+onBetween   func - lifecycle function that will call in the middle of the transition. Good for handling onClick events at the right time
+onEnd       func - lifecycle function that will call at the end of the transition. Good for handling onClick events at the right time
+
+*/
+
 
 class TransitionLink extends Component {
 
@@ -13,9 +24,9 @@ class TransitionLink extends Component {
     event.preventDefault()
     this.context.transition.goTo(
       this.props.to, 
-      this.props.start, 
-      this.props.between,
-      this.props.end,
+      this.props.onBegin, 
+      this.props.onBetween,
+      this.props.onEnd,
       event
     )
   }
