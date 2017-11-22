@@ -12,10 +12,15 @@ import { TransitionGroup, TransitionContext, TransitionLink } from './RouterTran
 
 const Routes = () => (
   <Wrapper>
-    <TransitionContext timeOut={375} timeIn={225}>
+    <TransitionContext time={300}>
       <Header>
         <h1>My Website</h1>
-        <StyledLink to='/'>Home</StyledLink>
+        <StyledLink to='/'
+          start={(e) => console.log('begin:',e)}
+          between={(e) => console.log('between:',e)}
+          end={(e) => console.log('end:',e)}>
+          Home
+        </StyledLink>
         <StyledLink to='/about'>About</StyledLink>
         <StyledLink to='/contact'>Contact</StyledLink>
       </Header>
@@ -33,6 +38,8 @@ const Routes = () => (
     </TransitionContext>
   </Wrapper>
 )
+
+
 
 
 const StyledLink = styled(TransitionLink)`

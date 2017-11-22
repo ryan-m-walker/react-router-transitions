@@ -10,20 +10,21 @@ class TransitionLink extends Component {
   }
 
   handleClick = event => {
-    if (this.props.onClick) {
-      this.props.onClick(event)
-    }
-
     event.preventDefault()
-    
-    this.context.transition.goTo(this.props.to)
+    this.context.transition.goTo(
+      this.props.to, 
+      this.props.start, 
+      this.props.between,
+      this.props.end,
+      event
+    )
   }
 
   render() {
     const { busyStyles, ...props } = this.props
     const { transitionState } = this.context.transition
     return (
-      <A 
+      <a
         busyStyles={busyStyles}
         transitionState={transitionState}
         onClick={this.handleClick}
@@ -31,15 +32,6 @@ class TransitionLink extends Component {
     )
   }
 }
-
-
-const A = styled.a`
-  ${props => {
-    if (props.transitionState) {
-      return props.busyStyles
-    }
-  }}
-`
 
 
 export default TransitionLink

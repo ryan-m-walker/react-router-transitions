@@ -32,7 +32,7 @@ class TransitionContext extends Component {
     }
   }
 
-  goTo = path => {
+  goTo = (path, start, between, end, e) => {
     const { time, timeIn, timeOut } = this.props
     const delayIn = timeIn ? timeIn : (time / 2)
     const delayOut = timeOut ? timeOut : (time / 2)
@@ -45,8 +45,12 @@ class TransitionContext extends Component {
     } = this.props
 
 
-    const outBegin = () => {  
+    const outBegin = () => {
       this.setState(() => ({ transitionState: 'out-begin' }))
+      if (start) {
+        start(e)
+      }  
+      console.log('delay out:', delayOut)
       // Run life-cycle function if exists
       if (lifeCycleOutBegin) {
         lifeCycleOutBegin(this.props, this.state)
@@ -68,8 +72,11 @@ class TransitionContext extends Component {
     }
 
     const inBetween = () => {
-      this.setState(() => ({ transitionState: 'in-between' }))
+      // this.setState(() => ({ transitionState: 'in-between' }))
       this.context.router.history.push(path)
+      if (between) {
+        between(e)
+      }
       setTimeout(() => {
         inBegin()
       }, 10)
@@ -89,6 +96,9 @@ class TransitionContext extends Component {
 
     const inEnd = () => {
       setTimeout(() => {
+        if (end) {
+          end(e)
+        }
         // Run life-cycle function if exists
         if (lifeCycleInEnd) {
           lifeCycleInEnd(this.props, this.state)

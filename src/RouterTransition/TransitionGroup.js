@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import Transition from './Transition'
-import Wrapper from './Wrapper'
+import getStyles from './getStyles'
 
 
 class TransitionGroup extends Component {
@@ -21,14 +20,15 @@ class TransitionGroup extends Component {
         time={time}
         timeIn={timeIn}
         timeOut={timeOut} 
-        className={wrapperClassName}
+        className={'transition-wrapper ' + wrapperClassName}
         transitionState={transitionState}
         wrapperStyles={wrapperStyles}
         wrapperEase={wrapperEase}>
         <Transition 
           time={time}
           timeIn={timeIn}
-          timeOut={timeOut} 
+          timeOut={timeOut}
+          className={'transition-wrapper ' + this.props.className}
           transitionStyles={transitionStyles}
           transitionState={transitionState}
           transitionEase={transitionEase}
@@ -40,5 +40,7 @@ class TransitionGroup extends Component {
   }
 }
 
+const Transition = styled.div`${props => getStyles(props, props.transitionStyles)}`
+const Wrapper = styled.div`${props => getStyles(props, props.wrapperStyles)}`
 
 export default TransitionGroup

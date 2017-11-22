@@ -33,7 +33,9 @@ export default styled.div`
         case 'in-begin':
           return transitionStyles.inBegin || ''
         case 'in-end':
-          return transitionStyles.inEnd || ''  
+          return transitionStyles.inEnd || ''
+        default :
+          return   
       }
     }
   }}
@@ -52,6 +54,8 @@ export default styled.div`
           return transitionStyles(props).inBegin || ''
         case 'in-end':
           return transitionStyles(props).inEnd || ''  
+        default :
+          return 
       }
     }
   }}
@@ -64,17 +68,17 @@ export default styled.div`
 
       switch(props.transitionState) {
         case 'out-begin':
-          return 'transition: all ' + timeIn + 'ms ' + (transitionEase ? transitionEase : '') + ';'
+          return 'transition: all ' + timeOut + 'ms ' + (transitionEase ? transitionEase : '') + ';'
         case 'out-end':
-          return 'transition: all ' + timeIn + 'ms ' + (transitionEase ? transitionEase : '') + ';'
+          return 'transition: all ' + timeOut + 'ms ' + (transitionEase ? transitionEase : '') + ';'
         case 'in-between':
           return
         case 'in-begin':
-          return 'transition: all ' + (timeOut - 200) + 'ms ' + (transitionEase ? transitionEase : '') + ';'
+          return 'transition: all ' + timeIn + 'ms ' + (transitionEase ? transitionEase : '') + ';'
         case 'in-end':
-          return 'transition: all ' + (timeOut - 200) + 'ms ' + (transitionEase ? transitionEase : '') + ';'
+          return 'transition: all ' + timeIn + 'ms ' + (transitionEase ? transitionEase : '') + ';'
         default: 
-          return ''
+          return 
       }
     }
   }} 

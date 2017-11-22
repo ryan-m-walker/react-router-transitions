@@ -4,50 +4,54 @@ import _ from 'lodash'
 
 export default styled.div`
   ${props => {
-    const { wrapperStyles } = props
-
-    if (typeof wrapperStyles === 'string') {
-      return wrapperStyles
-    } else if (_.isFunction(wrapperStyles)) {
-      const returnedStyles = wrapperStyles(props)
+    if (typeof props.wrapperStyles === 'string') {
+      return props.wrapperStyles
+    } else if (_.isFunction(props.wrapperStyles)) {
+      const returnedStyles = props.wrapperStyles(props)
       if (_.isString(returnedStyles)) {
         return returnedStyles
       } else if (_.isObject(returnedStyles) && _.has(returnedStyles, 'default')) {
         return returnedStyles.default
       }
-    } else if (_.isObject(wrapperStyles) && _.has(wrapperStyles, 'default')) {
-      return wrapperStyles.default
+    } else if (_.isObject(props.wrapperStyles) && _.has(props.wrapperStyles, 'default')) {
+      return props.wrapperStyles.default
     }
   }}
 
   ${props => {
-    const { wrapperStyles, transitionState } = props
-    if (_.isObject(wrapperStyles)) {
+    if (_.isObject(props.wrapperStyles)) {
+      const { wrapperStyles, transitionState } = props
+      const { outBegin, outEnd, inBegin, inEnd } = wrapperStyles
       switch(transitionState) {
         case 'out-begin':
-          return wrapperStyles.outBegin || '' 
-        case 'out-end':
-          return wrapperStyles.outEnd || '' 
+          return outBegin ? outBegin : '' 
+        case 'out-end': 
+          return outEnd ? outEnd : '' 
         case 'in-begin':
-          return wrapperStyles.inBegin || ''
+          return inBegin ? inBegin : ''
         case 'in-end':
-          return wrapperStyles.inEnd || ''  
+          return inEnd ? inEnd : ''
+        default:
+          return  
       }
     }
   }}
 
   ${props => {
-    const { wrapperStyles, transitionState } = props
-    if (_.isFunction(wrapperStyles)) {
+    if (_.isFunction(props.wrapperStyles)) {
+      const { wrapperStyles, transitionState } = props
+      const { outBegin, outEnd, inBegin, inEnd } = wrapperStyles
       switch(transitionState) {
         case 'out-begin':
-          return wrapperStyles.outBegin(props) || '' 
+          return outBegin ? outBegin(props) : '' 
         case 'out-end':
-          return wrapperStyles.outEnd(props) || '' 
+          return outEnd ? outEnd(props) : '' 
         case 'in-begin':
-          return wrapperStyles.inBegin(props) || ''
+          return inBegin ? inBegin(props) : ''
         case 'in-end':
-          return wrapperStyles.inEnd(props) || ''  
+          return inEnd ? inEnd(props) : '' 
+        default:
+          return 
       }
     }
   }}
