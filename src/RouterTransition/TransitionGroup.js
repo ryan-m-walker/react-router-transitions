@@ -27,7 +27,7 @@ class TransitionGroup extends Component {
 
   render() {
     const { time, transitionState, timeIn, timeOut } = this.context.transition
-    const { children, transitionStyles,  wrapperStyles, transitionEase, wrapperEase, wrapperClassName, ...props  } = this.props
+    const { className, children, transitionStyles,  wrapperStyles, transitionEase, wrapperEase, wrapperClassName, ...props  } = this.props
 
     return (
       <Wrapper
@@ -42,7 +42,7 @@ class TransitionGroup extends Component {
           time={time}
           timeIn={timeIn}
           timeOut={timeOut}
-          className={'transition-wrapper ' + this.props.className}
+          className={'transition-group' + (className ? className : '')}
           transitionStyles={transitionStyles}
           transitionState={transitionState}
           transitionEase={transitionEase}
@@ -56,13 +56,13 @@ class TransitionGroup extends Component {
 
 const Transition = styled.div`${props => 
   props.transitionStyles
-  ? getStyles(props, props.transitionStyles)
+  ? getStyles(props, props.transitionStyles, props.transitionEase)
   : ''
 }`
 
 const Wrapper = styled.div`${props => 
   props.wrapperStyles
-  ? getStyles(props, props.wrapperStyles)
+  ? getStyles(props, props.wrapperStyles, props.wrapperEase)
   : ''
 }`
 

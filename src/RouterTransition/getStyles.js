@@ -1,7 +1,7 @@
 import _ from 'lodash'
 
 
-export default (props, styles) => {
+export default (props, styles, ease) => {
   const { transitionState, timeIn, timeOut, time } = props
 
   const getDefaultStyles = () => {
@@ -59,17 +59,16 @@ export default (props, styles) => {
     console.log('In get transition styles')
       const delayIn = timeIn ? timeIn : (time / 2)
       const delayOut = timeOut ? timeOut : (time / 2)
-      const { wrapperEase } = props
 
       switch(transitionState) {
         case 'out-begin':
-          return 'transition: all ' + delayIn + 'ms ' + (wrapperEase ? wrapperEase : '') + ';'
+          return 'transition: all ' + delayIn + 'ms ' + (ease ? ease : '') + ';'
         case 'out-end':
-          return 'transition: all ' + delayIn + 'ms ' + (wrapperEase ? wrapperEase : '') + ';'
+          return 'transition: all ' + delayIn + 'ms ' + (ease ? ease : '') + ';'
         case 'in-begin':
           return ''
         case 'in-end':
-          return 'transition: all ' + delayOut + 'ms ' + (wrapperEase ? wrapperEase : '') + ';'
+          return 'transition: all ' + delayOut + 'ms ' + (ease ? ease : '') + ';'
         default: 
           return ''
       }

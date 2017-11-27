@@ -1,6 +1,7 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import styled from 'styled-components'
+import { transparentize } from 'polished'
 
 import Home from './components/Home'
 import About from './components/About'
@@ -12,7 +13,7 @@ import { TransitionGroup, TransitionContext, TransitionLink } from './RouterTran
 
 const Routes = () => (
   <Wrapper>
-    <TransitionContext time={300}>
+    <TransitionContext time={200}>
       <Header>
         <h1>My Website</h1>
         <StyledLink to='/'>
@@ -22,7 +23,7 @@ const Routes = () => (
         <StyledLink to='/contact'>Contact</StyledLink>
       </Header>
       <TransitionGroup
-        transitionEase='ease'
+        transitionEase='linear'
         transitionStyles={transitionStyles}
         wrapperStyles={wrapperStyles}>
         <Switch>
@@ -58,32 +59,45 @@ const wrapperStyles = {
   default: `
     padding: 2rem 5%;
     overflow: hidden;
-    background: white;
   `,
-  outBegin: 'background: white;',
-  outEnd: 'background: pink;',
-  inBegin: 'background: pink;',
-  inEnd: 'background: white;'
+  outBegin: `
+    background-color: ${transparentize(1, 'teal')};
+  `,
+  outEnd: `
+    background-color: ${transparentize(0.9, 'teal')};
+  `,
+  inBegin: `
+    background-color: ${transparentize(0.9, 'teal')};
+  `,
+  inEnd: `
+    background-color: ${transparentize(1, 'teal')};
+  `
 }
 
-const transitionStyles = props => ({
+
+const transitionStyles = {
+  default: `
+    transform-origin: 50% 100%;
+  `,
   outBegin: `
-    transform: translateY(0);
+    transform: scaleY(1);
     opacity: 1;
   `,
   outEnd: `
-    transform: translateY(2rem);
+    transform: scaleY(0);
     opacity: 0;
+
   `,
   inBegin: `
-    transform: translateY(2rem);
+    transform: scaleY(0);
     opacity: 0;
+
   `,
   inEnd: `
-    transform: translateY(0);
+    transform: scaleY(1);
     opacity: 1;
   `
-})
+}
 
 
 
