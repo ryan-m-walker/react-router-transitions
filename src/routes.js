@@ -4,8 +4,9 @@ import styled from 'styled-components'
 import { transparentize } from 'polished'
 
 import Home from './components/Home'
-import About from './components/About'
-import Contact from './components/Contact'
+import Context from './components/Context/index'
+import Link from './components/Link'
+import Group from './components/Group'
 import PageNotFound from './components/PageNotFound'
 
 import { TransitionGroup, TransitionContext, TransitionLink } from './RouterTransition'
@@ -13,35 +14,66 @@ import { TransitionGroup, TransitionContext, TransitionLink } from './RouterTran
 
 const Routes = () => (
   <Wrapper>
-    <TransitionContext time={1000}>
+    <TransitionContext timeOut={100} timeIn={400}>
+
       <Header>
         <h1>My Website</h1>
-        <StyledLink to='/'>
-          Home
-        </StyledLink>
-        <StyledLink to='/about'>About</StyledLink>
-        <StyledLink to='/contact'>Contact</StyledLink>
+        <TransitionLink
+          exact
+          to='/'
+          defaultStyles={linkStyles}
+          activeStyles={activeLink}>
+          Intro
+        </TransitionLink>
+        <TransitionLink
+          to='/transition-context'
+          defaultStyles={linkStyles}
+          activeStyles={activeLink}>
+          TransitionContext
+        </TransitionLink>
+        <TransitionLink
+          to='/transition-link'
+          defaultStyles={linkStyles}
+          activeStyles={activeLink}>
+          TransitionLink
+        </TransitionLink><TransitionLink
+          to='/transition-group'
+          defaultStyles={linkStyles}
+          activeStyles={activeLink}>
+          transitionGroup
+        </TransitionLink>
       </Header>
+
       <TransitionGroup
-        transitionEase='linear'
+        transitionEase='ease-out'
         transitionStyles={transitionStyles}
         wrapperStyles={wrapperStyles}>
         <Switch>
           <Route exact path='/' component={Home} />
-          <Route path='/about' component={About} />
-          <Route path='/contact' component={Contact} />
+          <Route path='/transition-context' component={Context} />
+          <Route path='/transition-link' component={Link} />
+          <Route path='/transition-group' component={Group} />
           <Route component={PageNotFound} />
         </Switch>
       </TransitionGroup>
+
     </TransitionContext>
   </Wrapper>
 )
 
 
-const StyledLink = styled(TransitionLink)`
+const linkStyles = ({theme}) => `
   color: white;
   margin-right: 1.5rem;
   cursor: pointer;
+  transition: color 250ms, border-color 150ms;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid ${ transparentize(1, theme.secondaryColor)}
+`
+
+const activeLink = ({theme}) => `
+  color: ${theme.secondaryColor};
+  border-bottom: 3px solid ${ theme.secondaryColor }
 `
 
 const Header = styled.header`
@@ -67,21 +99,21 @@ const transitionStyles = props => ({
     transform-origin: 0 0;
   `,
   outBegin: `
-    transform: scale(1);
+    transform: translateX(0);
     opacity: 1;
   `,
   outEnd: `
-    transform: scale(0.75);
+    transform: translateX(-10%);
     opacity: 0;
 
   `,
   inBegin: `
-    transform: scale(1.25);
+    transform: translateX(50%);
     opacity: 0;
 
   `,
   inEnd: `
-    transform: scale(1);
+    transform: translateX(0);
     opacity: 1;
   `
 })

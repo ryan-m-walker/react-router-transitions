@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
+import _ from 'lodash'
+
 
 /*
 
@@ -20,28 +23,53 @@ class TransitionLink extends Component {
   }
 
   handleClick = event => {
-    event.preventDefault()
-    this.context.transition.goTo(
-      this.props.to, 
-      this.props.onBegin, 
-      this.props.onBetween,
-      this.props.onEnd,
-      event
-    )
+    if (this.context.transition.activeLocation !== this.props.to) {
+      event.preventDefault()
+      this.context.transition.goTo(
+        this.props.to, 
+        this.props.onBegin, 
+        this.props.onBetween,
+        this.props.onEnd,
+        event
+      )
+    }
   }
 
   render() {
-    const { busyStyles, ...props } = this.props
+    const { busyStyles, children, ...props } = this.props
     const { transitionState } = this.context.transition
+    const active = this.props.exact 
+      ? this.context.transition.activeLocation === this.props.to
+      : this.context.transition.activeLocation.startsWith(this.props.to) 
     return (
-      <a
+      <Link
+        active={active}
         busyStyles={busyStyles}
         transitionState={transitionState}
         onClick={this.handleClick}
-        {...props} />
+        {...props}>
+        { children }
+      </Link>
     )
   }
 }
+
+const Link = styled.a`
+  ${ props => {
+    if (_.isFunction(props.defaultStatus)) {
+      return props.defaultStyles(props)
+    }
+    return props.defaultStyles 
+  }}
+  ${ props => {
+    if (props.active) {
+      if (_.isFunction(props.activeStyles)) {
+        return props.activeStyles(props)
+      }
+      return props.activeStyles 
+    }
+  }}
+`
 
 
 export default TransitionLink

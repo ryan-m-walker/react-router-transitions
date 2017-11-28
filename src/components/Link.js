@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const About = () => (
+const Link = () => (
   <div>
     <h1>About</h1>
     <p>Welcome to my About page!</p>
@@ -9,4 +9,4 @@ const About = () => (
 )
 
 
-export default About
+export default Link

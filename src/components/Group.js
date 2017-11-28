@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const Contact = () => (
+const Group = () => (
   <div>
     <h1>Contact</h1>
     <p>Welcome to my Contact page!</p>
@@ -9,4 +9,4 @@ const Contact = () => (
 )
 
 
-export default Contact
+export default Group

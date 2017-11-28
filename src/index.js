@@ -8,7 +8,8 @@ import { ThemeProvider } from 'styled-components'
 
 
 const theme = {
-  color: 'yellow'
+  primaryColor: 'teal',
+  secondaryColor: 'yellow'
 }
 
 

@@ -52,7 +52,8 @@ class TransitionContext extends Component {
         transitionState: this.state.transitionState,
         time: this.props.time,
         timeIn: this.props.timeIn,
-        timeOut: this.props.timeOut
+        timeOut: this.props.timeOut,
+        activeLocation: this.context.router.history.location.pathname
       }
     }
   }
