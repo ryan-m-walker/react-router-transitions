@@ -13,7 +13,7 @@ import { TransitionGroup, TransitionContext, TransitionLink } from './RouterTran
 
 const Routes = () => (
   <Wrapper>
-    <TransitionContext timeOut={350} timeIn={200}>
+    <TransitionContext time={1000}>
       <Header>
         <h1>My Website</h1>
         <StyledLink to='/'>
@@ -55,49 +55,36 @@ const Wrapper = styled.section`
   background: white;
 `
 
-const wrapperStyles = {
-  default: `
-    padding: 2rem 5%;
-    overflow: hidden;
-  `,
-  outBegin: `
-    background-color: ${transparentize(1, 'teal')};
-  `,
-  outEnd: `
-    background-color: ${transparentize(0.93, 'teal')};
-  `,
-  inBegin: `
-    background-color: ${transparentize(0.93, 'teal')};
-  `,
-  inEnd: `
-    background-color: ${transparentize(1, 'teal')};
-  `
-}
+const wrapperStyles =  `
+  padding: 2rem 5%;
+  overflow: hidden;
+`
 
 
-const transitionStyles = {
+
+const transitionStyles = props => ({
   default: `
-    transform-origin: 50% 100%;
+    transform-origin: 0 0;
   `,
   outBegin: `
-    transform: translateY(0);
+    transform: scale(1);
     opacity: 1;
   `,
   outEnd: `
-    transform: translateY(20px);
+    transform: scale(0.75);
     opacity: 0;
 
   `,
   inBegin: `
-    transform: translateY(20px);
+    transform: scale(1.25);
     opacity: 0;
 
   `,
   inEnd: `
-    transform: translateY(0);
+    transform: scale(1);
     opacity: 1;
   `
-}
+})
 
 
 

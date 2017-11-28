@@ -20,8 +20,9 @@ export default (props, styles, ease) => {
     return ''
   }
 
-  const getObjectStyles = () => {
-    const { outBegin, outEnd, inBegin, inEnd } = styles
+  const getStyles = () => {
+    const styleKeys = _.isFunction(styles) ? styles(props) : styles
+    const { outBegin, outEnd, inBegin, inEnd } = styleKeys
     switch(transitionState) {
       case 'out-begin':
         return outBegin ? outBegin : '' 
@@ -34,22 +35,6 @@ export default (props, styles, ease) => {
       default:
         return ''  
     } 
-  }
-
-  const getFunctionStyles = () => {
-    const { outBegin, outEnd, inBegin, inEnd } = styles(props)
-    switch(transitionState) {
-      case 'out-begin':
-        return outBegin ? outBegin : '' 
-      case 'out-end':
-        return outEnd ? outEnd : '' 
-      case 'in-begin':
-        return inBegin ? inBegin : ''
-      case 'in-end':
-        return inEnd ? inEnd : '' 
-      default:
-        return ''
-    }
   }
 
   const getTransitionStyles = () => {
@@ -71,8 +56,7 @@ export default (props, styles, ease) => {
 
   return `
     ${ getDefaultStyles() }
-    ${ _.isObject(styles) ? getObjectStyles() : '' }
-    ${ _.isFunction(styles) ? getFunctionStyles() : '' }
+    ${ _.isObject(styles) || _.isFunction(styles) ? getStyles() : '' }
     ${ getTransitionStyles()}
   `
 }
