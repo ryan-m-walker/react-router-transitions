@@ -1,16 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
-import Routes from './routes'
 import { BrowserRouter } from 'react-router-dom'
-import registerServiceWorker from './registerServiceWorker'
 import { ThemeProvider } from 'styled-components'
 
-
-const theme = {
-  primaryColor: 'teal',
-  secondaryColor: 'yellow'
-}
+import Routes from './routes/routes'
+import './index.css'
+import theme from './themes/theme'
+import registerServiceWorker from './registerServiceWorker'
 
 
 const MyApp = () => (
