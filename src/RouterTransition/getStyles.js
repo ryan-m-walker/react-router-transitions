@@ -57,13 +57,13 @@ export default (props, styles, ease) => {
     const delayOut = timeOut ? timeOut : (time / 2)
     switch(transitionState) {
       case 'out-begin':
-        return 'transition: all ' + delayIn + 'ms ' + (ease ? ease : '') + ';'
+        return 'transition: all ' + delayOut + 'ms ' + (ease ? ease : '') + ';'
       case 'out-end':
-        return 'transition: all ' + delayIn + 'ms ' + (ease ? ease : '') + ';'
+        return 'transition: all ' + delayOut + 'ms ' + (ease ? ease : '') + ';'
       case 'in-begin':
         return ''
       case 'in-end':
-        return 'transition: all ' + delayOut + 'ms ' + (ease ? ease : '') + ';'
+        return 'transition: all ' + delayIn + 'ms ' + (ease ? ease : '') + ';'
       default: 
         return ''
     }

@@ -13,7 +13,7 @@ import { TransitionGroup, TransitionContext, TransitionLink } from './RouterTran
 
 const Routes = () => (
   <Wrapper>
-    <TransitionContext time={200}>
+    <TransitionContext timeOut={350} timeIn={200}>
       <Header>
         <h1>My Website</h1>
         <StyledLink to='/'>
@@ -64,10 +64,10 @@ const wrapperStyles = {
     background-color: ${transparentize(1, 'teal')};
   `,
   outEnd: `
-    background-color: ${transparentize(0.9, 'teal')};
+    background-color: ${transparentize(0.93, 'teal')};
   `,
   inBegin: `
-    background-color: ${transparentize(0.9, 'teal')};
+    background-color: ${transparentize(0.93, 'teal')};
   `,
   inEnd: `
     background-color: ${transparentize(1, 'teal')};
@@ -80,21 +80,21 @@ const transitionStyles = {
     transform-origin: 50% 100%;
   `,
   outBegin: `
-    transform: scaleY(1);
+    transform: translateY(0);
     opacity: 1;
   `,
   outEnd: `
-    transform: scaleY(0);
+    transform: translateY(20px);
     opacity: 0;
 
   `,
   inBegin: `
-    transform: scaleY(0);
+    transform: translateY(20px);
     opacity: 0;
 
   `,
   inEnd: `
-    transform: scaleY(1);
+    transform: translateY(0);
     opacity: 1;
   `
 }
