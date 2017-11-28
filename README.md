@@ -112,7 +112,9 @@ The *transitionEase* and *wrapperEase* props take a string that allow you define
 
     <TransitionGroup 
       transitionEase='linear' 
-      wrapperEase='ease-out'/>
+      wrapperEase='ease-out'>
+      ...
+    </TransitionGroup>
 
 #### *transitionStyles* & *wrapperStyles*
 
@@ -124,7 +126,9 @@ Using a string in the styles props is the same as applying static styles using a
 
 *Example:*
 
-    <TransitionGroup wrapperStyles={wrapperStyles} />
+    <TransitionGroup wrapperStyles={wrapperStyles}>
+      ...
+    </TransitionGroup>
     ...
     const wrapperStyles = 'background: black;'
 
@@ -132,7 +136,9 @@ You can use template literals to define multiline CSS similar to how you would w
 
 *Example:*
 
-    <TransitionGroup wrapperStyles={wrapperStyles} />
+    <TransitionGroup wrapperStyles={wrapperStyles}>
+      ...
+    </TransitionGroup>
     ...
     const wrapperStyles = `
       background: black;
@@ -146,7 +152,9 @@ A better use of string styles is to use a function that returns a string. The fu
 
 *Example*:
 
-    <TransitionGroup wrapperStyles={wrapperStyles} />
+    <TransitionGroup wrapperStyles={wrapperStyles}>
+      ...
+    </TransitionGroup>
     ...
     const wrapperStyles = props => `
       background: props.theme.backgroundColor
@@ -159,7 +167,9 @@ In order to apply animation styles to a transition you have to use an object. Th
 
 *Example*:
 
-    <TransitionGroup transitionStyles={transitionStyles} />
+    <TransitionGroup transitionStyles={transitionStyles}>
+      ...
+    </TransitionGroup>
     ...
     const transitionStyles = {
       default: `
@@ -190,7 +200,9 @@ Like with the string, you can also create a function that returns an object whic
 
 *Example*:
 
-    <TransitionGroup transitionStyles={transitionStyles} />
+    <TransitionGroup transitionStyles={transitionStyles}>
+      ...
+    </TransitionGroup>
     ...
     const transitionStyles = props => ({
       outBegin: `
