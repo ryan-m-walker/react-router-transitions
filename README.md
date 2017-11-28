@@ -1,11 +1,15 @@
 
 # React-Router-Transitions:
 
+- [TransitionContext](#transitioncontex)
+- [TransitionLink](#transitionlink)
+- [TransitionGroup](#transitiongroup)
 
+## Components:
 
 ## TransitionContext
 
-The *TransitionContext* compenent is the main wrapping component for react-router-transitions. In order for your TransitionLinks and TransitionGroups to be linked they must both be placed inside a *TransitionContext* component. A *TransitionContext* component must also be a descendant of a react-router *BrowserRouter* or *Router* component. This is necessariy because it uses the history object provided by that component to manipulate the url and make sure the UI updates in accordance with your routes. The transition context is also where you set your overall transition timings. This can be done through either the *time* prop, in which case the time in milliseconds provided will be divided evenly between transition out of the old route and transition in of the new route, or else the different times can be specified using the *timeOut* and *timeIn* props.
+The *TransitionContext* compenent is the main wrapping component for react-router-transitions. It is used to communicate from your TransitionLinks to your TransitionGroups allowing you to place your navigation links where you would like with out having to pass state up and down a chain of components to update your routes. It can also used to keep your transitions in synce if you decide to have more than one transition group in a transition. In order for your TransitionLinks and TransitionGroups to be linked they must both be placed inside the *TransitionContext* component. A *TransitionContext* component must also be a descendant of a react-router *BrowserRouter* or *Router* component. This is necessariy because it uses the same history object provided by that component to manipulate the url and make sure the UI updates in accordance with your routes. The transition context is also where you set your overall transition timings.
 
 *Example*:
 
@@ -21,11 +25,30 @@ The *TransitionContext* compenent is the main wrapping component for react-route
           <Route exact path='/' component={Home} />  // from react-router
           <Route path='/about' component={About} />  // from react-router
         </TransitionGroup>
+      </TransitionContext>
     </BrowserRouter> 
 
-### TransitionContext lifecyle functions
+#### Props
 
-There are four lifecycle function props for the TransitionContext component that can be used to add more functionality during a transition: *outBegin*, *outEnd*, *inBegin* and *inEnd*. *outBegin* will be fired right at the begining of the entire transition, immediately before the leaving route begins its exit. The *outEnd* function will be fired right after that route has completed its exit. The *inBegin* functin will be fired right before the entering route begins is transition in. The *inEnd* function will be fired at the very end of the transition, after the entering route has finished its transition into place.
+#### *time*, *timeOut* & *timeIn*
+
+The timing for your transitions are defined in the *TransitionContext* compenent using either the 'time' prop or the 'timeOut' and 'timeIn' props. All three components take a number which is the time for the transition in milliseconds. If the 'time' prop is used the number defined will specify the total lenght of the transition with the time evenly distributed between the transition out and transition in. To specify specific transition times between transitioning in and out use the 'timeOut' and 'timeIn' props together to specify different times.
+
+*Example*:
+
+    // Both the transition in and out will take half a second
+    <TransitionContext time={1000}>
+    ...
+    </TransitionContext>
+
+
+    <TransitionContext timeOut={600} timeIn={300}>
+    ...
+    </TransitionContext>    
+
+#### Transition Cycle Function Hooks
+
+There are four function props for the TransitionContext component that can be used to add more functionality during a transition: *outBegin*, *outEnd*, *inBegin* and *inEnd*. *outBegin* will be fired right at the begining of the entire transition, immediately before the leaving route begins its exit. The *outEnd* function will be fired right after that route has completed its exit. The *inBegin* functin will be fired right before the entering route begins is transition in. The *inEnd* function will be fired at the very end of the transition, after the entering route has finished its transition into place.
 
 *Example*: 
 
@@ -34,23 +57,55 @@ There are four lifecycle function props for the TransitionContext component that
       outEnd={() => console.log('Old component has left')}
       inBegin={() => console.log('New component is beginning its entrance')}
       inBegin={() => console.log('New component is beginning its entrance')}>
-
-
       ...
     </TransitionContext>
 
 ## TransitionLink
 
-- Behaves very similarily to react-router Link component
-- 
+The *TransitionLink* component works similarily to react-routers *Link* component and is used to trigger the transition and route change when clicked on.
+
+#### Props:
+
+#### *to*
+
+Like the react-router *Link* component, *TransitionLink* also has a 'to' prop which specifies the route you would like to link to. It accepts a string with the URL to route to link to.
+
+*Example*:
+
+    <TransitionLink to='/'>
+      Home
+    </TransitionLink>
+    <TransitionLink to='/about'>
+      About
+    </TransitionLink>
+
+#### Transition Cycle Fucntion Hooks
+
+Like the *TransitionContext* component, the *TransitionLink* component also has a set of function props that can be used to trigger specific funcionality at a certain time during a transition. This can be useful for updating state in a Nav component at a specific time depending on the *TransitionLink* being clicked on. The 'onBegin' function will fire right when the *TransitionLink* is clicked. The 'onBetween' function will fire after the first route component has transitioned out and the new one is about to begin its entrance. The 'onEnd' function will fire at the end of the transition.
+
+*Example*:
+
+    ...
+    updateNav(link) {
+      this.setState(() => {
+        return { activeNav: link }
+      })
+    }
+    ...
+    <TransitionLink to='/'
+      onBegin={() => console.log('Begining transition')}
+      onBetween={() => this.updateNav('home')}
+      onEnd={() => console.log('Transition ended)}>
+    Home
+    </TransitionLink>
 
 ## TransitionGroup
 
 The TransitionGroup component is a component that wraps around the content that you want to animate during a transition. An easy way to achieve this is to wrap all your Routes or your Switch in the TransitionGroup component but can also be wrapped around other content you would like to animate. The component is made up of two divs: the Transition and the Wrapper. Both can be animated seperately and will animate in synce with each other. 
 
-### Props:
+#### Props:
 
-### *transitionEase* & *wrapperEase*
+#### *transitionEase* & *wrapperEase*
 
 The *transitionEase* and *wrapperEase* props take a string that allow you define the easing function that you would regularily pass to a CSS animation rule. The *transitionEase* will be applied to the main transition group and the *wrapperEase* will be passed to the wrapper div.
 
@@ -60,7 +115,7 @@ The *transitionEase* and *wrapperEase* props take a string that allow you define
       transitionEase='linear' 
       wrapperEase='ease-out'/>
 
-### *transitionStyles* & *wrapperStyles*
+#### *transitionStyles* & *wrapperStyles*
 
 The transitionStyles and wrapperStyles props are were you define the styles to be applied to the transition group during the transition. There are several ways to set this up. These props can be either a string, a function that returns a string, an object or a function that returns an object:
 

@@ -5,7 +5,6 @@ export default (props, styles, ease) => {
   const { transitionState, timeIn, timeOut, time } = props
 
   const getDefaultStyles = () => {
-    console.log('In default styles')
     if (typeof styles === 'string') {
       return styles
     } else if (_.isFunction(styles)) {
@@ -22,7 +21,6 @@ export default (props, styles, ease) => {
   }
 
   const getObjectStyles = () => {
-    console.log('In get object styles')
     const { outBegin, outEnd, inBegin, inEnd } = styles
     switch(transitionState) {
       case 'out-begin':
@@ -39,7 +37,6 @@ export default (props, styles, ease) => {
   }
 
   const getFunctionStyles = () => {
-    console.log('In get function styles')
     const { outBegin, outEnd, inBegin, inEnd } = styles(props)
     switch(transitionState) {
       case 'out-begin':
@@ -56,23 +53,20 @@ export default (props, styles, ease) => {
   }
 
   const getTransitionStyles = () => {
-    console.log('In get transition styles')
-      const delayIn = timeIn ? timeIn : (time / 2)
-      const delayOut = timeOut ? timeOut : (time / 2)
-
-      switch(transitionState) {
-        case 'out-begin':
-          return 'transition: all ' + delayIn + 'ms ' + (ease ? ease : '') + ';'
-        case 'out-end':
-          return 'transition: all ' + delayIn + 'ms ' + (ease ? ease : '') + ';'
-        case 'in-begin':
-          return ''
-        case 'in-end':
-          return 'transition: all ' + delayOut + 'ms ' + (ease ? ease : '') + ';'
-        default: 
-          return ''
-      }
-    
+    const delayIn = timeIn ? timeIn : (time / 2)
+    const delayOut = timeOut ? timeOut : (time / 2)
+    switch(transitionState) {
+      case 'out-begin':
+        return 'transition: all ' + delayIn + 'ms ' + (ease ? ease : '') + ';'
+      case 'out-end':
+        return 'transition: all ' + delayIn + 'ms ' + (ease ? ease : '') + ';'
+      case 'in-begin':
+        return ''
+      case 'in-end':
+        return 'transition: all ' + delayOut + 'ms ' + (ease ? ease : '') + ';'
+      default: 
+        return ''
+    }
   }
 
   return `
@@ -82,4 +76,3 @@ export default (props, styles, ease) => {
     ${ getTransitionStyles()}
   `
 }
-
