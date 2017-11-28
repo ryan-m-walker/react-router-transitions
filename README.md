@@ -65,6 +65,75 @@ The *TransitionLink* component works similarily to react-routers *Link* componen
 
 #### Props:
 
+#### *activeStyles*
+
+The styles to be applied to an active TransitionLink. This will also match sublocations unless the exact prop is used. For example activeStyles for a TransitionLink to '/about' will be applied to '/about' and '/about/subpage'. This prop can be provided either a string or a function that returns a string. If a function is used the links props will be passed to the function as its only argument. The styled component theme prop can be accessed using this if a theme has been set up for your project with the ThemeProvider.
+
+*Example*:
+
+      // String
+      <TransitionLink
+        activeStyles={activeLink} 
+        to='/about'>
+        About
+      </TransitionLink>
+      ...
+      const activeLink = `
+        color: grey;
+        font-weight: bold;
+      `
+
+      // Function
+      <TransitionLink
+        activeStyles={activeLink} 
+        to='/about'>
+        About
+      </TransitionLink>
+      ...
+      const activeLink = props => `
+        color: props.theme.primaryColor;
+      `
+
+#### *defaultStyles*
+
+The defaultStyles prop can be used to setup default styles for a TransitionLink. This can be either a string or a function that returns a string. If a function is used components props will be passed as the only argument.
+
+*Example*:
+
+      // String
+      <TransitionLink
+        defaultStyles={linkStyles} 
+        to='/about'>
+        About
+      </TransitionLink>
+      ...
+      const linkStyles = `
+        font-family: sans-serif;
+        border: 1px solid grey;
+      `
+
+      // Function
+      <TransitionLink
+        activeStyles={linkStyles} 
+        to='/about'>
+        About
+      </TransitionLink>
+      ...
+      const linkStyles = props => `
+        color: props.theme.secondaryColor;
+      `
+
+#### *exact*
+
+When true, the activeStyles will only be applied if the location is matched exactly. This is useful for a location such as '/' that could match to many paths.
+
+*Example*:
+
+    <TransitionLink exact to='/'>
+      Home
+    </TransitionLink>
+
+
 #### *to*
 
 Like the react-router *Link* component, *TransitionLink* also has a 'to' prop which specifies the route you would like to link to. It accepts a string with the URL to route to link to.
@@ -77,6 +146,7 @@ Like the react-router *Link* component, *TransitionLink* also has a 'to' prop wh
     <TransitionLink to='/about'>
       About
     </TransitionLink>
+
 
 #### Transition Cycle Fucntion Hooks
 
