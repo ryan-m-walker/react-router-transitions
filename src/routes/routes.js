@@ -4,29 +4,29 @@ import styled from 'styled-components'
 import { transparentize } from 'polished'
 
 import Header from '../components/Header'
-import Home from '../components/Home'
-import Context from '../components/Context/index'
-import Link from '../components/Link'
-import Group from '../components/Group'
-import PageNotFound from '../components/PageNotFound'
+import Page from '../components/Page'
 
+import data from '../data/data'
 import { TransitionGroup, TransitionContext, TransitionLink } from '../RouterTransition'
 import { Wrapper, transitionStyles, wrapperStyles } from './styles'
 
 const Routes = () => (
   <Wrapper>
     <TransitionContext timeOut={100} timeIn={400}>
-      <Header />
+      <Header data={data}/>
       <TransitionGroup
         transitionEase='ease-out'
         transitionStyles={transitionStyles}
         wrapperStyles={wrapperStyles}>
         <Switch>
-          <Route exact path='/' component={Home} />
-          <Route path='/transition-context' component={Context} />
-          <Route path='/transition-link' component={Link} />
-          <Route path='/transition-group' component={Group} />
-          <Route component={PageNotFound} />
+          {
+            data.pages.map(page => (
+              <Route 
+                exact={page.exactPath} 
+                path={page.path}
+                render={() => <Page data={page}/>} />
+            ))
+          }
         </Switch>
       </TransitionGroup>
     </TransitionContext>
@@ -36,3 +36,10 @@ const Routes = () => (
 
 
 export default Routes
+
+
+{/* <Route exact path='/' component={Home} />
+<Route path='/transition-context' component={Context} />
+<Route path='/transition-link' component={Link} />
+<Route path='/transition-group' component={Group} />
+<Route component={PageNotFound} /> */}

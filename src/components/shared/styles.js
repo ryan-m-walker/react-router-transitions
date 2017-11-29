@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components'
 
-const delayIn = keyframes`
+export const delayIn = keyframes`
   from { transform: translateX(200px); }
   to { transform: translateX(0px); }
 `

@@ -5,35 +5,21 @@ import { transparentize } from 'polished'
 import { TransitionLink } from '../RouterTransition'
 
 
-const Header = () => (
+const Header = ({data}) => (
   <Wrapper>
-    <H1>React-Router-Styled-Transitions</H1>
+    <H1>{ data.siteTitle }</H1>
     <NavBar>
-      <TransitionLink
-        exact
-        to='/'
-        defaultStyles={linkStyles}
-        activeStyles={activeLink}>
-        Intro
-      </TransitionLink>
-      <TransitionLink
-        to='/transition-context'
-        defaultStyles={linkStyles}
-        activeStyles={activeLink}>
-        TransitionContext
-      </TransitionLink>
-      <TransitionLink
-        to='/transition-link'
-        defaultStyles={linkStyles}
-        activeStyles={activeLink}>
-        TransitionLink
-      </TransitionLink>
-      <TransitionLink
-        to='/transition-group'
-        defaultStyles={linkStyles}
-        activeStyles={activeLink}>
-        transitionGroup
-      </TransitionLink>
+    {
+      data.pages.map(page => (
+        <TransitionLink 
+          to={page.path}
+          exact={page.exactPath}
+          defaultStyles={linkStyles}
+          activeStyles={activeLink}>
+          { page.title }
+        </TransitionLink>
+      ))
+    }
     </NavBar>
   </Wrapper>
 )
@@ -75,3 +61,31 @@ const NavBar = styled.header`
 
 export default Header
 
+
+
+
+// <TransitionLink
+// exact
+// to='/'
+// defaultStyles={linkStyles}
+// activeStyles={activeLink}>
+// Intro
+// </TransitionLink>
+// <TransitionLink
+// to='/transition-context'
+// defaultStyles={linkStyles}
+// activeStyles={activeLink}>
+// TransitionContext
+// </TransitionLink>
+// <TransitionLink
+// to='/transition-link'
+// defaultStyles={linkStyles}
+// activeStyles={activeLink}>
+// TransitionLink
+// </TransitionLink>
+// <TransitionLink
+// to='/transition-group'
+// defaultStyles={linkStyles}
+// activeStyles={activeLink}>
+// transitionGroup
+// </TransitionLink>
