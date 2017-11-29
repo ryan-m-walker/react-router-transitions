@@ -1,7 +1,8 @@
 
 export default {
   color: {
-    primary: 'yellow'
+    primary: '#dd4444',
+    white: '#eee'
   },
   size: {
     xs: '0.5rem',

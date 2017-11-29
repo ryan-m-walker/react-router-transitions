@@ -26,26 +26,27 @@ const Header = ({data}) => (
 
 
 const linkStyles = ({theme}) => `
-  color: white;
+  color: ${theme.color.white};
   margin-right: 1.5rem;
   cursor: pointer;
   transition: color 250ms, border-color 150ms;
   padding-bottom: 0.5rem;
-  border-bottom: 3px solid ${ transparentize(1, theme.color.primary)}
+  border-bottom: 3px solid ${ transparentize(1, theme.color.primary)};
 `
 
 const activeLink = ({theme}) => `
-  color: ${theme.color.primary};
-  border-bottom: 3px solid ${ theme.color.primary }
+  border-bottom: 3px solid ${ theme.color.primary };
 `
 
 const H1 = styled.h1`
   ${ ({theme}) => `
-    font-family: ${theme.font.heading};
-    font-size: ${theme.size.l};
+    color: ${theme.color.primary};
+    font-family: ${theme.font.body};
+    font-size: ${theme.size.xl};
     margin-bottom: ${theme.size.l};
   `}
   text-transform: uppercase;
+  letter-spacing: 0.25rem;
 `
 
 const Wrapper = styled.div`
