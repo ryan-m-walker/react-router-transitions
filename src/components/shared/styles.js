@@ -10,6 +10,7 @@ export const H2 = styled.h2`
     font-family: ${theme.font.body};
     font-size: ${theme.size.l};
     margin-bottom: ${theme.size.xl};
+    color: ${theme.color.dark};
     `}
   font-weight: bold;
 `
@@ -23,6 +24,7 @@ export const H3 = styled.h3`
     font-family: ${theme.font.body};
     font-size: ${theme.size.m};
     margin-bottom: ${theme.size.l};
+    color: ${theme.color.primary};
     `}
   font-weight: bold;
 `

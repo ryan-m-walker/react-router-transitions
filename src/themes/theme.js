@@ -2,7 +2,8 @@
 export default {
   color: {
     primary: '#dd4444',
-    white: '#eee'
+    white: '#eee',
+    dark: '#333'
   },
   size: {
     xs: '0.5rem',

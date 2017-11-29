@@ -52,15 +52,15 @@ const Page = ({data}) => (
 {/* <Route exact path='/transition-context/' component={Overview}/>
 <Route exact path='/transition-context/props' component={Props}/> */}
 
-const linkStyles = `
-padding: 0.5rem;
-cursor: pointer;
-transition: background-color 250ms linear;
-background: #fff;
+const linkStyles = ({theme}) => `
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: background-color 250ms linear;
+  background: #ececec;
 `
 
 const activeLink = `
-background: #eee;
+background: #ccc;
 `
 
 const wrapperStyles = `
